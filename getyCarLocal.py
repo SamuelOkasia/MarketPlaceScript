@@ -9,29 +9,23 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import requests
 import re
-import os
 
 profile_directory = r'Profile 1'  # replace 'Profile 1' with your profile's name
 user_data_dir = r"C:\Users\ojadi\AppData\Local\Google\Chrome\User Data"
-chrome_bin = os.environ.get("GOOGLE_CHROME_BIN", "chromedriver")
 
-chrome_options = webdriver.ChromeOptions()
-chrome_options.binary_location = chrome_bin
-chrome_options.add_argument("--headless")
-chrome_options.add_argument("--disable-dev-shm-usage")
-chrome_options.add_argument("--no-sandbox")
-
+chrome_options = Options()
+chrome_options.add_argument(f"user-data-dir={user_data_dir}")
+chrome_options.add_argument(f"profile-directory={profile_directory}")
+chrome_options.add_argument("--headless")  # Ensure GUI is off
 
 API_ENDPOINT = "http://127.0.0.1:5000/api/add_product"
-
-chrome_driver_path = os.environ.get("CHROMEDRIVER_PATH", "chromedriver")
 
 class main():
 
     def __init__(self, link):
         self.link = link
-        self.link = link
-        self.driver = webdriver.Chrome(executable_path=chrome_driver_path, options=chrome_options)
+        webdriver_service = Service(ChromeDriverManager().install())
+        self.driver = webdriver.Chrome(service=webdriver_service ,options=chrome_options)
         self.driver.get(link)
         self.clickSeeMoreButton()
         html_source = self.driver.page_source

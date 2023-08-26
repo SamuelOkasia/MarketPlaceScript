@@ -11,7 +11,7 @@ import time
 from bs4 import BeautifulSoup
 
 
-
+'''
 firefox_profile_path = r'C:\\Users\\ojadi\\AppData\\Roaming\\Mozilla\\Firefox\\Profiles\\p4n04sri.default-release'  # Replace with the path of your Firefox profile
 options = Options()
 options.binary_location = r'C:\Program Files\Mozilla Firefox\firefox.exe'
@@ -20,6 +20,22 @@ options.add_argument("-profile")
 options.add_argument(firefox_profile_path)
 service = Service('geckodriver.exe')
 driver = Firefox(service=service, options=options)
+'''
+
+#Start
+import os
+from selenium import webdriver
+firefox_bin = os.environ.get("FIREFOX_BIN", "firefox")  # Default to "firefox" if not set
+
+options = webdriver.FirefoxOptions()
+options.binary_location = firefox_bin
+options.add_argument("--headless")
+
+# The service uses the GECKODRIVER_PATH provided by the buildpack
+service = webdriver.firefox.service.Service(os.environ.get("GECKODRIVER_PATH"))
+driver = webdriver.Firefox(service=service, options=options)
+#Stop
+
 driver.get("https://www.facebook.com/marketplace/london/search?query=vw%20polo")
 time.sleep(5)
 
