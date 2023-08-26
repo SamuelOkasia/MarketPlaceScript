@@ -16,6 +16,7 @@ user_data_dir = r"C:\Users\ojadi\AppData\Local\Google\Chrome\User Data"
 chrome_bin = os.environ.get("GOOGLE_CHROME_BIN", "chromedriver")
 
 chrome_options = webdriver.ChromeOptions()
+
 chrome_options.binary_location = chrome_bin
 chrome_options.add_argument("--headless")
 chrome_options.add_argument("--disable-dev-shm-usage")
